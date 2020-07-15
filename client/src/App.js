@@ -1,4 +1,5 @@
 import React from 'react'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import './App.css'
 import SpotifyWebApi from 'spotify-web-api-js'
 const spotifyApi = new SpotifyWebApi()
@@ -56,6 +57,76 @@ function ArtistCard( { artist }) {
   )
 }
 
+function TopTracks ({ tracks }) {
+  return (
+    <div className="top-tracks">
+      <TopTracksList tracks={tracks}/>
+    </div>
+  )
+}
+
+function TopTracksList ({ tracks }) {
+  return (
+    <>
+      <div className="artists-list-container">
+        <h2 className="uppercase rotate--90">Your Favorite Tracks</h2>
+        <ul className="flex-list">
+          { tracks.map((track) => (
+            <TrackCard track={track} key={track.id}/>
+          ))}
+        </ul>
+      </div>
+    </>
+  )
+}
+
+function TrackCard( { track }) {
+  return (
+    <li className="card card--wide card--animated">
+      <div className="avatar-wrapper">
+        <img
+          className="avatar"
+          alt={`avatar for ${track.name}`}
+          src={track.album.images[0].url}
+        />
+      </div>
+      <div className="artist-details padding">
+        <a
+          className="link link--green-hover header header--artist-card"
+          href={`${BASE_WEB_PLAYER_URL}/track/${track.id}`}>
+          {track.name}
+        </a>
+        {track.genres && track.genres.length > 0
+          ? (
+            <div className="genres">
+              {/* <span className="">Genres: {artist.genres.join(', ')}</span> */}
+            </div>
+          )
+          : null
+        }
+      </div>
+    </li>
+  )
+}
+
+const Home = () => (
+  <div className="flex flex--column page--center-both">
+    <h2>What do you want to look at?</h2>
+    <div className="flex flex--center-both">
+      <Link
+        className="link route-link"
+        to="/artists">
+          My Top Artists
+      </Link>
+      <Link
+        className="link route-link"
+        to="/tracks">
+          My Top Tracks
+      </Link>
+    </div>
+  </div>
+)
+
 class App extends React.Component {
   constructor() {
     super()
@@ -66,12 +137,14 @@ class App extends React.Component {
     }
     this.state = {
       loggedIn: token ? true : false,
-      topArtists: []
+      topArtists: [],
+      topTracks: [],
     }
     this.getTopArtists = this.getTopArtists.bind(this)
   }
   componentDidMount() {
     this.getTopArtists();
+    this.getTopTracks();
   }
   getHashParams() {
     var hashParams = {}
@@ -88,13 +161,21 @@ class App extends React.Component {
     spotifyApi.getMyTopArtists()
       .then((response) => this.setState({ topArtists: response.items }))
   }
+  getTopTracks() {
+    spotifyApi.getMyTopTracks()
+      .then((response) => this.setState({ topTracks: response.items }))
+  }
   render() {
     const { loggedIn } = this.state
 
     return (
       <div className="App">
         { loggedIn === true
-            ? <TopArtists artists={this.state.topArtists}/>
+            ? <Router>
+                <Route exact path="/" component={Home} />
+                <Route path="/artists" render={() => (<TopArtists artists={this.state.topArtists}/>)} />
+                <Route path="/tracks" render={() => (<TopTracks tracks={this.state.topTracks}/>)} />
+              </Router>
             : ( <a href="http://localhost:8888">Login to Spotify</a>)
         }
       </div>
