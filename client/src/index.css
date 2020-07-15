@@ -16,6 +16,28 @@ code {
     monospace;
 }
 
+.flex {
+  display: flex;
+}
+.flex--column {
+  flex-direction: column;
+}
+.flex--row {
+  flex-direction: row;
+}
+.flex--center-both {
+  justify-content: center;
+  align-items: center;
+}
+.page--center-both {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  margin: auto;
+}
 .flex-list {
   display: flex;
   flex-flow: row wrap;
@@ -64,6 +86,12 @@ code {
   animation-delay: 2.9s
 }
 
+.route-link {
+  font-family: "Barlow";
+  font-size: 36px;
+  padding: 40px;
+}
+
 .artists-list-container {
   position: relative;
 }
@@ -109,6 +137,7 @@ code {
 .link {
   display: inline-block;
   text-decoration: none;
+  color: inherit;
 }
 
 .link--green-hover {
