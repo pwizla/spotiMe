@@ -17,7 +17,8 @@ function TopArtistsList ({ artists }) {
   return (
     <>
       <div className="artists-list-container">
-        <h2 className="uppercase rotate--90">Your Favorite Artists</h2>
+        <h2 className="uppercase">Your Favorite Artists</h2>
+        <p><RatherSee text="your favorite tracks" link="/tracks" /></p>
         <ul className="flex-list">
           { artists.map((artist) => (
             <ArtistCard artist={artist} key={artist.id}/>
@@ -57,6 +58,14 @@ function ArtistCard( { artist }) {
   )
 }
 
+function RatherSee ({ text, link }) {
+  return (
+    <>
+      <p className="text--small">Rather see <Link to={link} className="link link--green-underline">{text}</Link>?</p>
+    </>
+  )
+}
+
 function TopTracks ({ tracks }) {
   return (
     <div className="top-tracks">
@@ -69,7 +78,8 @@ function TopTracksList ({ tracks }) {
   return (
     <>
       <div className="artists-list-container">
-        <h2 className="uppercase rotate--90">Your Favorite Tracks</h2>
+        <h2 className="uppercase">Your Favorite Tracks</h2>
+        <RatherSee text="your favorite artists" link="/artists" />
         <ul className="flex-list">
           { tracks.map((track) => (
             <TrackCard track={track} key={track.id}/>

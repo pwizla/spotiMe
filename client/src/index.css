@@ -160,6 +160,15 @@ code {
   height: 10px;
 }
 
+.link--green-underline {
+  color: inherit;
+  transition: color .2s ease-in;
+  border-bottom: solid 1px #1db954;
+}
+.link--green-underline:hover {
+  color: #1db954;
+}
+
 .header {
   color: inherit;
   font-size: 24px;
@@ -171,6 +180,9 @@ code {
   text-align: right;
 }
 
+.text--small {
+  font-size: 14px;
+}
 .uppercase {
   text-transform: uppercase;
   letter-spacing: 1px;
