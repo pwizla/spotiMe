@@ -12,11 +12,9 @@ var request = require('request'); // "Request" library
 var cors = require('cors');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
-var { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI } = require('../config.json');
+const { client_id, client_secret, redirect_uri } = require('./config')
 
-var client_id = CLIENT_ID;
-var client_secret = CLIENT_SECRET; 
-var redirect_uri = REDIRECT_URI;
+console.log(redirect_uri);
 
 /**
  * Generates a random string containing numbers and letters
@@ -82,7 +80,7 @@ app.get('/callback', function(req, res) {
         grant_type: 'authorization_code'
       },
       headers: {
-        'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
+        'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toLocaleString('base64'))
       },
       json: true
     };
@@ -126,7 +124,7 @@ app.get('/refresh_token', function(req, res) {
   var refresh_token = req.query.refresh_token;
   var authOptions = {
     url: 'https://accounts.spotify.com/api/token',
-    headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')) },
+    headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).redirect_uri('base64')) },
     form: {
       grant_type: 'refresh_token',
       refresh_token: refresh_token
