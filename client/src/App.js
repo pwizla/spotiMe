@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom'
 import './App.css'
 import SpotifyWebApi from 'spotify-web-api-js'
 const spotifyApi = new SpotifyWebApi()
@@ -151,6 +151,7 @@ class App extends React.Component {
       topTracks: [],
     }
     this.getTopArtists = this.getTopArtists.bind(this)
+    this.getTopTracks = this.getTopTracks.bind(this)
   }
   componentDidMount() {
     this.getTopArtists();
@@ -183,6 +184,7 @@ class App extends React.Component {
         { loggedIn === true
             ? <Router>
                 <Route exact path="/" component={Home} />
+                <Route exact path="/callback" render={() => (<Redirect to="/" />)} />
                 <Route path="/artists" render={() => (<TopArtists artists={this.state.topArtists}/>)} />
                 <Route path="/tracks" render={() => (<TopTracks tracks={this.state.topTracks}/>)} />
               </Router>

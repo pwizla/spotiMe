@@ -14,8 +14,6 @@ var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 const { client_id, client_secret, redirect_uri } = require('./config')
 
-console.log(redirect_uri);
-
 /**
  * Generates a random string containing numbers and letters
  * @param  {number} length The length of the string
@@ -103,7 +101,7 @@ app.get('/callback', function(req, res) {
         });
 
         // we can also pass the token to the browser to make requests from there
-        res.redirect('http://localhost:3000/#' +
+        res.redirect('http://localhost:3000/callback#' +
           querystring.stringify({
             access_token: access_token,
             refresh_token: refresh_token
