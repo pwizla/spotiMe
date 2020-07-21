@@ -41,7 +41,7 @@ code {
 .flex-list {
   display: flex;
   flex-flow: row wrap;
-  justify-content:space-around;
+  justify-content: space-around;
 }
 .card {
   display: flex;
@@ -198,6 +198,42 @@ code {
   animation-delay: .2s;
   bottom: 30%;
   left: 100px;
+}
+
+.album-cover {
+  width: 160px;
+  height: 160px;
+  filter: saturate(100%);
+  transition: filter .2s ease-in-out;
+  position: relative;
+}
+
+.album-details {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  color: #fff;
+  font-weight: bold;
+  background-color: rgba(36, 36, 36, .6);
+  transition: opacity .2s ease-in-out;
+}
+.album-details a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.album-cover:hover .album-details {
+  opacity: 1;
+}
+.album-cover:hover {
+  filter: saturate(0)
 }
 
 @keyframes rotation {
