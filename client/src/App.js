@@ -4,6 +4,7 @@ import './App.css'
 import SpotifyWebApi from 'spotify-web-api-js'
 const spotifyApi = new SpotifyWebApi()
 const BASE_WEB_PLAYER_URL = "https://open.spotify.com"
+const LOGIN_URI = process.env.REACT_APP_LOGIN_URI || 'http://localhost:9000/.netlify/functions/server/login'
 
 function TopArtists ({ artists }) {
   return (
@@ -188,7 +189,7 @@ class App extends React.Component {
                 <Route path="/artists" render={() => (<TopArtists artists={this.state.topArtists}/>)} />
                 <Route path="/tracks" render={() => (<TopTracks tracks={this.state.topTracks}/>)} />
               </Router>
-            : ( <a href="http://localhost:8888">Login to Spotify</a>)
+            : ( <a href={LOGIN_URI}>Login to Spotify</a>)
         }
       </div>
     )
