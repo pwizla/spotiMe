@@ -20,7 +20,7 @@ function TopArtistsList ({ artists }) {
       <div className="artists-list-container">
         <h2 className="uppercase">Your Favorite Artists</h2>
         <p><RatherSee text="your favorite tracks" link="/tracks" /></p>
-        <ul className="flex-list">
+        <ul className="flex-list flex-list--full-screen">
           { artists.map((artist) => (
             <ArtistCard artist={artist} key={artist.id}/>
           ))}
@@ -33,14 +33,16 @@ function TopArtistsList ({ artists }) {
 function ArtistCard( { artist }) {
   return (
     <li className="card card--wide card--animated">
-      <div className="avatar-wrapper">
-        <img
-          className="avatar"
-          alt={`avatar for ${artist.name}`}
-          src={artist.images[0].url}
-        />
-      </div>
-      <div className="artist-details padding">
+      {(artist.images && artist.images.length > 0) && (
+        <div className="avatar-wrapper">
+          <img
+            className="avatar"
+            alt={`avatar for ${artist.name}`}
+            src={artist.images[0].url}
+          />
+        </div>
+      )}
+      <div className={`artist-details padding ${!artist.images || artist.images.length === 0 ? 'artist-details--placeholder' : ''}`}>
         <Link
           className="link link--green-hover header header--artist-card"
           to={`/artists/${artist.id}`}
@@ -207,7 +209,7 @@ class ArtistDetails extends React.Component {
 
     return (
       <>
-        {images && (<img
+        {(images && images.length > 0) && (<img
           className="artist-image-pouet"
           src={images[0].url}
           alt={name}

@@ -41,7 +41,11 @@ code {
 .flex-list {
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-around;
+}
+.flex-list--full-screen {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .card {
   display: flex;
@@ -52,8 +56,16 @@ code {
   color: #FFFFFF;
 }
 .card--wide {
-  width: 400px;
+  width: 360px;
+  overflow: hidden;
 }
+.card--wide img {
+  transition: transform .4s ease-in-out;
+}
+.card--wide:hover img {
+  transform: scale(1.05)
+}
+
 .card--animated {
   animation-name: fadein;
   opacity: 0;
@@ -83,7 +95,7 @@ code {
   animation-delay: 1.9s
 }
 .card--animated:nth-child(9) {
-  animation-delay: 2.9s
+  animation-delay: 2.1s
 }
 
 .route-link {
@@ -103,6 +115,9 @@ code {
   background-image: linear-gradient(90deg, rgba(0,0,0,0), rgba(0,0,0,1) 60%);
   width: 100%;
 }
+.artist-details--placeholder {
+  background-color: #000;
+}
 
 .avatar-wrapper {
   /* position: relative; */
@@ -120,6 +135,7 @@ code {
   bottom: 0;
   width: 100%;
   height: 100%;
+  transform: scale(1);
 }
 
 .inline-list {
@@ -155,9 +171,8 @@ code {
   background-color: #1db954;
   transition: height .2s ease-in-out;
 }
-
 .link--green-hover:hover::before {
-  height: 10px;
+  height: 30%;
 }
 
 .link--green-underline {
@@ -191,11 +206,13 @@ code {
 .text--small {
   font-size: 14px;
 }
+
 .uppercase {
   text-transform: uppercase;
   letter-spacing: 1px;
   font-size: 36px;
 }
+
 .rotate--90 {
   position: fixed;
   transform-origin: bottom left;
