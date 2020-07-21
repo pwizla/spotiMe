@@ -41,11 +41,12 @@ function ArtistCard( { artist }) {
         />
       </div>
       <div className="artist-details padding">
-        <a
+        <Link
           className="link link--green-hover header header--artist-card"
-          href={`${BASE_WEB_PLAYER_URL}/artist/${artist.id}`}>
+          to={`/artists/${artist.id}`}
+        >
           {artist.name}
-        </a>
+        </Link>
         {artist.genres && artist.genres.length > 0
           ? (
             <div className="genres">
@@ -138,6 +139,122 @@ const Home = () => (
   </div>
 )
 
+class AlbumCard extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      imageLoaded: false
+    }
+  }
+  render() {
+    const { name, images, release_date, external_urls: {spotify: url }} = this.props
+    const { imageLoaded } = this.state
+    const date = new Date(release_date);
+    const year = date.getFullYear();
+
+    return (
+      <>
+        {(images && images.length > 0) && (
+          <div className={`album-card ${imageLoaded ? 'loaded' : ''}`}>
+            <img
+              className="album-cover"
+              src={images[0].url}
+              alt={name}
+              onLoad={() => this.setState({imageLoaded: true})}
+            />
+            <div className="album-details">
+              <a href={url}>{name}</a>
+              <div className="year">({year})</div>
+            </div>
+          </div>
+        )}
+      </>
+    )
+  }
+}
+class ArtistDetails extends React.Component {
+  constructor(props) {
+    super(props)
+    this.getArtist = this.getArtist.bind(this)
+    this.getArtistAlbums = this.getArtistAlbums.bind(this)
+
+    this.state = {
+      artist: {},
+      albums: {},
+      related: {}
+    }
+  }
+  componentDidMount() {
+    this.getArtist(this.props.match.params.id)
+    this.getArtistAlbums(this.props.match.params.id)
+    this.getRelatedArtists(this.props.match.params.id)
+  }
+  getArtist(id) {
+    spotifyApi.getArtist(id)
+      .then(data => this.setState({ artist: data}))
+  }
+  getArtistAlbums(artistId) {
+    spotifyApi.getArtistAlbums(artistId)
+      .then(data => this.setState({ albums: data.items }))
+  }
+  getRelatedArtists(artistId) {
+    spotifyApi.getArtistRelatedArtists(artistId)
+      .then(data => this.setState({ related: data.artists }))
+  }
+  render() {
+    const { name, genres, id, images } = this.state.artist
+    const { albums, related } = this.state
+
+    return (
+      <>
+        {images && (<img
+          className="artist-image-pouet"
+          src={images[0].url}
+          alt={name}
+          style={{height: '200px', width: '200px'}}
+        />
+        )}
+        <h1 className="header--artist-details">
+          <a
+            className="link link--green-hover"
+            href={`${BASE_WEB_PLAYER_URL}/artist/${id}`}>
+            {name}
+          </a>
+        </h1>
+        {genres && genres.length > 0
+          ? (
+            <div className="genres">
+              <h2 className="page-details-subheader">Genres</h2>
+              <span className="">{genres.join(', ')}</span>
+            </div>
+          )
+          : null
+        }
+        { (albums && albums.length > 0) && (
+          <div className="page-details-section">
+            <h2 className="subheader">Albums</h2>
+            <ul className="albums flex-list">
+              { albums.map((album) => (
+                <AlbumCard {...album} />
+              ))}
+            </ul>
+          </div>
+        )}
+        { (related && related.length > 0) && (
+          <div className="page-details-section">
+            <h2 className="subheader">Related Artists</h2>
+            <ul className="related flex-list flex-list--full-screen">
+              { related.map((artist) => (
+                <ArtistCard artist={artist} />
+              ))}
+            </ul>
+          </div>
+        )}
+      </>
+    )
+  }
+}
+
 class App extends React.Component {
   constructor() {
     super()
@@ -186,8 +303,9 @@ class App extends React.Component {
             ? <Router>
                 <Route exact path="/" component={Home} />
                 <Route exact path="/callback" render={() => (<Redirect to="/" />)} />
-                <Route path="/artists" render={() => (<TopArtists artists={this.state.topArtists}/>)} />
+                <Route exact path="/artists" render={() => (<TopArtists artists={this.state.topArtists}/>)} />
                 <Route path="/tracks" render={() => (<TopTracks tracks={this.state.topTracks}/>)} />
+                <Route path="/artists/:id" render={(props) => (<ArtistDetails key={props.location.pathname} {...props} />)} />
               </Router>
             : ( <a href={LOGIN_URI}>Login to Spotify</a>)
         }
