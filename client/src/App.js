@@ -174,11 +174,13 @@ class AlbumCard extends React.Component {
     )
   }
 }
+
 class ArtistDetails extends React.Component {
   constructor(props) {
     super(props)
     this.getArtist = this.getArtist.bind(this)
     this.getArtistAlbums = this.getArtistAlbums.bind(this)
+    this.filterArtistAlbums = this.filterArtistAlbums.bind(this)
 
     this.state = {
       artist: {},
@@ -196,16 +198,49 @@ class ArtistDetails extends React.Component {
       .then(data => this.setState({ artist: data}))
   }
   getArtistAlbums(artistId) {
-    spotifyApi.getArtistAlbums(artistId)
-      .then(data => this.setState({ albums: data.items }))
+    spotifyApi.getArtistAlbums(artistId, {limit: 50, country: 'FR'})
+      .then(data => this.setState({ albums: { fullList: data.items }}))
+      .then(() => this.filterArtistAlbums())
   }
+  filterArtistAlbums() {
+    const albumsByType = this.state.albums.fullList.reduce((accumulator, item) => {
+      if (!accumulator[item.album_group]) {
+        accumulator[item.album_group] = [];
+      }
+
+      accumulator[item.album_group].push(item)
+      return accumulator
+    }, {})
+    this.setState({ albums: {...this.state.albums, byType: albumsByType }})
+  }
+  beautifyType(type) {
+    let beautified;
+    switch (type) {
+      case 'album':
+        beautified =  'Albums'
+        break
+      case 'single':
+        beautified = 'Singles'
+        break
+      case 'appears_on':
+        beautified =  'Other Appearances'
+        break
+      case 'compilation':
+        beautified = 'Compilations'
+        break
+      default:
+        beautified = type
+    }
+    return beautified
+  }
+
   getRelatedArtists(artistId) {
     spotifyApi.getArtistRelatedArtists(artistId)
       .then(data => this.setState({ related: data.artists }))
   }
   render() {
     const { name, genres, id, images } = this.state.artist
-    const { albums, related } = this.state
+    const { albums: { byType }, related } = this.state
 
     return (
       <>
@@ -232,16 +267,17 @@ class ArtistDetails extends React.Component {
           )
           : null
         }
-        { (albums && albums.length > 0) && (
+
+        { !!byType && Object.keys(byType).map((type) => (
           <div className="page-details-section">
-            <h2 className="subheader">Albums</h2>
+            <h2 className="subheader">{this.beautifyType(type)}</h2>
             <ul className="albums flex-list">
-              { albums.map((album) => (
+              { byType[type].map((album) => (
                 <AlbumCard {...album} />
               ))}
             </ul>
           </div>
-        )}
+        ))}
         { (related && related.length > 0) && (
           <div className="page-details-section">
             <h2 className="subheader">Related Artists</h2>
