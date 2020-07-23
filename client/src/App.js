@@ -147,6 +147,10 @@ class AlbumCard extends React.Component {
     this.state = {
       imageLoaded: false
     }
+    this.maybeTruncate = this.maybeTruncate.bind(this)
+  }
+  maybeTruncate(string, maxChar = 70) {
+    return string.length > maxChar ? string.substring(0, maxChar) + '…' : string
   }
   render() {
     const { name, images, release_date, external_urls: {spotify: url }} = this.props
@@ -165,7 +169,7 @@ class AlbumCard extends React.Component {
               onLoad={() => this.setState({imageLoaded: true})}
             />
             <div className="album-details">
-              <a href={url}>{name}</a>
+              <a href={url}>{this.maybeTruncate(name)}</a>
               <div className="year">({year})</div>
             </div>
           </div>
