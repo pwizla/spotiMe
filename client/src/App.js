@@ -18,7 +18,7 @@ function TopArtistsList ({ artists }) {
   return (
     <>
       <div className="artists-list-container">
-        <h2 className="uppercase">Your Favorite Artists</h2>
+        <h2 className="uppercase font-size--36">Your Favorite Artists</h2>
         <p><RatherSee text="your favorite tracks" link="/tracks" /></p>
         <ul className="flex-list flex-list--full-screen">
           { artists.map((artist) => (
@@ -82,9 +82,9 @@ function TopTracksList ({ tracks }) {
   return (
     <>
       <div className="artists-list-container">
-        <h2 className="uppercase">Your Favorite Tracks</h2>
+        <h2 className="uppercase font-size--36">Your Favorite Tracks</h2>
         <RatherSee text="your favorite artists" link="/artists" />
-        <ul className="flex-list">
+        <ul className="flex-list flex-list--full-screen">
           { tracks.map((track) => (
             <TrackCard track={track} key={track.id}/>
           ))}
@@ -243,52 +243,57 @@ class ArtistDetails extends React.Component {
     const { albums: { byType }, related } = this.state
 
     return (
-      <>
-        {(images && images.length > 0) && (<img
-          className="artist-image-pouet"
-          src={images[0].url}
-          alt={name}
-          style={{height: '200px', width: '200px'}}
-        />
-        )}
-        <h1 className="header--artist-details">
-          <a
-            className="link link--green-hover"
-            href={`${BASE_WEB_PLAYER_URL}/artist/${id}`}>
-            {name}
-          </a>
-        </h1>
-        {genres && genres.length > 0
-          ? (
-            <div className="genres">
-              <h2 className="page-details-subheader">Genres</h2>
-              <span className="">{genres.join(', ')}</span>
-            </div>
-          )
-          : null
-        }
+      <div className="page page--two-columns">
+        <section className="column column--full-height artist-summary">
+          {(images && images.length > 0) && (<img
+            className="artist-image square--320"
+            src={images[0].url}
+            alt={name}
+          />
+          )}
+          <h1 className="header--artist-details flex-can-grow">
+            <a
+              className="link link--green-hover"
+              href={`${BASE_WEB_PLAYER_URL}/artist/${id}`}>
+              {name}
+            </a>
+          </h1>
+          {genres && genres.length > 0
+            ? (
+              <div className="genres">
+                <h2 className="page-details-subheader">Genres</h2>
+                <span className="">{genres.join(', ')}</span>
+              </div>
+            )
+            : null
+          }
+        </section>
 
-        { !!byType && Object.keys(byType).map((type) => (
-          <div className="page-details-section">
-            <h2 className="subheader">{this.beautifyType(type)}</h2>
-            <ul className="albums flex-list">
-              { byType[type].map((album) => (
-                <AlbumCard {...album} />
-              ))}
-            </ul>
-          </div>
-        ))}
-        { (related && related.length > 0) && (
-          <div className="page-details-section">
-            <h2 className="subheader">Related Artists</h2>
-            <ul className="related flex-list flex-list--full-screen">
-              { related.map((artist) => (
-                <ArtistCard artist={artist} />
-              ))}
-            </ul>
-          </div>
-        )}
-      </>
+        <section className="column artist-releases">
+          { !!byType && Object.keys(byType).map((type) => (
+            <div className="page-details-section">
+              <h2 className="subheader">{this.beautifyType(type)}</h2>
+              <ul className="albums flex-list">
+                { byType[type].map((album) => (
+                  <AlbumCard {...album} />
+                ))}
+              </ul>
+            </div>
+          ))}
+          { (related && related.length > 0) && (
+            <div className="page-details-section">
+              <h2 className="subheader">Related Artists</h2>
+              <ul className="related flex-list flex-list--full-screen">
+                { related.map((artist) => (
+                  <ArtistCard artist={artist} />
+                ))}
+              </ul>
+            </div>
+          )}
+        </section>
+
+
+      </div>
     )
   }
 }
@@ -325,11 +330,11 @@ class App extends React.Component {
     return hashParams
   }
   getTopArtists() {
-    spotifyApi.getMyTopArtists()
+    spotifyApi.getMyTopArtists({limit: 21})
       .then((response) => this.setState({ topArtists: response.items }))
   }
   getTopTracks() {
-    spotifyApi.getMyTopTracks()
+    spotifyApi.getMyTopTracks({limit: 21})
       .then((response) => this.setState({ topTracks: response.items }))
   }
   render() {

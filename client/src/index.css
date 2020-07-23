@@ -43,6 +43,7 @@ code {
   flex-flow: row wrap;
 }
 .flex-list--full-screen {
+  justify-content: space-around;
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
@@ -51,13 +52,19 @@ code {
   display: flex;
   text-align: left;
   margin-bottom: 20px;
-  margin-right: 40px;
+  margin-right: 20px;
   position: relative;
   color: #FFFFFF;
 }
 .card--wide {
-  width: 360px;
+  width: 320px;
   overflow: hidden;
+}
+@media (min-width: 1024px) {
+  .card--wide {
+    width: 360px;
+    margin-right: 10px;
+  }
 }
 .card--wide img {
   transition: transform .4s ease-in-out;
@@ -114,6 +121,14 @@ code {
   z-index: 1;
   background-image: linear-gradient(90deg, rgba(0,0,0,0), rgba(0,0,0,1) 60%);
   width: 100%;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+@media (min-width: 1024px) {
+  .artist-details {
+    padding-right: 40px;
+    padding-left: 40px;
+  }
 }
 .artist-details--placeholder {
   background-color: #000;
@@ -121,10 +136,15 @@ code {
 
 .avatar-wrapper {
   /* position: relative; */
-  width: 150px;
+  width: 120px;
   height: 150px;
   overflow: hidden;
   flex-shrink: 0;
+}
+@media (min-width: 1024px) {
+  .avatar-wrapper {
+    width: 150px;
+  }
 }
 .avatar {
   object-fit: cover;
@@ -144,10 +164,6 @@ code {
 }
 .inline-list-item {
   display: inline;
-}
-
-.padding {
-  padding: 20px 40px;
 }
 
 .link {
@@ -195,8 +211,15 @@ code {
   text-align: right;
 }
 
+.header--uptitle {
+  margin-top: 4em;
+  margin-bottom: 1em;
+}
+
 .header--artist-details {
   font-size: 4em;
+  line-height: 1em;
+  margin-top: 1em;
 }
 .header--artist-details a {
   color: inherit;
@@ -215,6 +238,9 @@ code {
 .uppercase {
   text-transform: uppercase;
   letter-spacing: 1px;
+}
+
+.font-size--36 {
   font-size: 36px;
 }
 
@@ -300,6 +326,49 @@ code {
 }
 .album-card.loaded:hover .album-details {
   opacity: 1;
+}
+
+.artist-summary {
+  padding: 50px 60px 60px 40px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+@media (min-width: 1024px) {
+  .artist-summary {
+    width: 480px;
+  }
+  .column--full-height {
+    max-height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+  }
+}
+
+.flex-can-grow {
+  flex-grow: 1;
+}
+
+.page-details-section:not(:last-child) {
+  margin-bottom: 60px;
+}
+
+@media (min-width: 1024px) {
+  .artist-releases {
+    margin-left: 610px
+  }
+  .artist-releases .card {
+    margin-right: 14px !important;
+  }
+}
+
+.square--320 {
+  height: 320px;
+  width: 320px;
 }
 
 @keyframes rotation {
