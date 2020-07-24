@@ -60,6 +60,11 @@ code {
   width: 320px;
   overflow: hidden;
 }
+@media (min-width: 760px) and (max-width: 1189px) {
+  .card--wide:nth-child(21) {
+    display: none;
+  }
+}
 @media (min-width: 1024px) {
   .card--wide {
     width: 360px;
@@ -136,10 +141,15 @@ code {
 
 .avatar-wrapper {
   /* position: relative; */
-  width: 120px;
+  width: 50px;
   height: 150px;
   overflow: hidden;
   flex-shrink: 0;
+}
+@media (min-width: 768px) {
+  .avatar-wrapper {
+    width: 120px;
+  }
 }
 @media (min-width: 1024px) {
   .avatar-wrapper {
