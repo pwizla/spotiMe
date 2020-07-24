@@ -169,7 +169,7 @@ class AlbumCard extends React.Component {
               onLoad={() => this.setState({imageLoaded: true})}
             />
             <div className="album-details">
-              <a href={url}>{this.maybeTruncate(name)}</a>
+              <a href={url} target="_blank" rel="noopener noreferrer">{this.maybeTruncate(name)}</a>
               <div className="year">({year})</div>
             </div>
           </div>
