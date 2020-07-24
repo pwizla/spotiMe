@@ -177,30 +177,26 @@ code {
 }
 
 .link {
-  display: inline-block;
   text-decoration: none;
   color: inherit;
 }
 
 .link--green-hover {
-  position: relative;
+  background:
+     linear-gradient(
+       to bottom, #1db954 0%,
+       #1db954 100%
+     );
+    background-position: 0 100%;
+    background-repeat: repeat-x;
+    background-size: 4px 0px;
+  /* color: #000; */
+  text-decoration: none;
+  transition: background-size .2s;
 }
-
-.link--green-hover::before {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  z-index: -1;
-  left: 0;
-  width: 100%;
-  height: 0;
-  background-color: #1db954;
-  transition: height .2s ease-in-out;
+.link--green-hover:hover {
+  background-size: 4px .4em;
 }
-.link--green-hover:hover::before {
-  height: 30%;
-}
-
 .link--green-underline {
   color: inherit;
   transition: color .2s ease-in;

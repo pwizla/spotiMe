@@ -44,10 +44,10 @@ function ArtistCard( { artist }) {
       )}
       <div className={`artist-details padding ${!artist.images || artist.images.length === 0 ? 'artist-details--placeholder' : ''}`}>
         <Link
-          className="link link--green-hover header header--artist-card"
+          className="link header header--artist-card"
           to={`/artists/${artist.id}`}
         >
-          {artist.name}
+          <span className="link--green-hover">{artist.name}</span>
         </Link>
         {artist.genres && artist.genres.length > 0
           ? (
