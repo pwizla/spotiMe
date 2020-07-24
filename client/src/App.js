@@ -164,7 +164,7 @@ class AlbumCard extends React.Component {
           <div className={`album-card ${imageLoaded ? 'loaded' : ''}`}>
             <img
               className="album-cover"
-              src={images[0].url}
+              src={images[1].url}
               alt={name}
               onLoad={() => this.setState({imageLoaded: true})}
             />
