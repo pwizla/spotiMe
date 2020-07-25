@@ -113,19 +113,27 @@ function TrackCard( { track }) {
 }
 
 const Home = () => (
-  <div className="flex flex--column page--center-both">
-    <h2 className="text--center">What do you want to look at?</h2>
-    <div className="flex flex--center-both">
-      <Link
-        className="link route-link"
-        to="/artists">
-          My Top Artists
-      </Link>
-      <Link
-        className="link route-link"
-        to="/tracks">
-          My Top Tracks
-      </Link>
+  <div className="height--full">
+    <h2 className="text--center above">What do you want to look at?</h2>
+    <div className="height--100">
+      <div className="width--50 height--100 pos--rel float--left hover--bg-black hover--color-white transition--fast">
+        <Link
+          className="link route-link bold width--100 height--100"
+          to="/artists">
+          <div className="center--both bold pos--abs link--green-hover">
+            My Top Artists
+          </div>
+        </Link>
+      </div>
+      <div className="width--50 height--100 pos--rel float--right hover--bg-green hover--color-white transition--fast">
+        <Link
+          className="link route-link bold width--100 height--100"
+          to="/tracks">
+          <div className="center--both pos--abs link--black-hover">
+            My Top Tracks
+          </div>
+        </Link>
+      </div>
     </div>
   </div>
 )
