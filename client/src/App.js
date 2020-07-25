@@ -65,7 +65,7 @@ function ArtistCard( { artist, expandable }) {
 function RatherSee ({ text, link }) {
   return (
     <>
-      <p className="text--small">Rather see <Link to={link} className="link link--green-underline">{text}</Link>?</p>
+      <p className="text--small margin--bottom-3">Rather see <Link to={link} className="link link--green-underline">{text}</Link>?</p>
     </>
   )
 }
