@@ -384,6 +384,15 @@ code {
   flex-grow: 1;
 }
 
+.genres {
+  padding-bottom: 0;
+  transition: padding .2s ease-in-out;
+}
+@media (max-height: 595px) and (min-width: 768px) {
+  .genres {
+    padding-bottom: 55px;
+  }
+}
 .page-details-section:not(:last-child) {
   margin-bottom: 60px;
 }
