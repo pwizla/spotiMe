@@ -30,9 +30,9 @@ function TopArtistsList ({ artists }) {
   )
 }
 
-function ArtistCard( { artist }) {
+function ArtistCard( { artist, expandable }) {
   return (
-    <li className="card card--wide card--animated">
+    <li className={`card card--wide card--animated ${expandable ? 'card--expandable' : ''}`}>
       {(artist.images && artist.images.length > 0) && (
         <div className="avatar-wrapper">
           <img
@@ -287,10 +287,17 @@ class ArtistDetails extends React.Component {
           { (related && related.length > 0) && (
             <div className="page-details-section">
               <h2 className="subheader">Related Artists</h2>
-              <ul className="related flex-list flex-list--full-screen">
-                { related.map((artist) => (
-                  <ArtistCard artist={artist} />
+              <ul className="related flex-list">
+                <div className="column--left">
+                  { related.slice(0, 10).map((artist) => (
+                    <ArtistCard artist={artist} expandable/>
+                  ))}
+                </div>
+                <div className="column--right">
+                { related.slice(10, 20).map((artist) => (
+                  <ArtistCard artist={artist} expandable/>
                 ))}
+                </div>
               </ul>
             </div>
           )}
