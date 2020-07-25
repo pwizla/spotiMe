@@ -85,7 +85,7 @@ code {
   width: 0;
 }
 .card--expandable .artist-details {
-  padding: 14px 20px 10px;
+  padding: 14px 20px;
   background: linear-gradient(90deg, rgba(0,0,0,0), rgba(0,0,0,1) 90%);
 }
 .card--expandable .artist-details a {
@@ -93,12 +93,6 @@ code {
 }
 .card--expandable:hover {
   height: 120px;
-}
-.card--expandable:hover .avatar-wrapper {
-  width: 120px;
-}
-.card--expandable:hover .artist-details {
-  background: linear-gradient(90deg, rgba(0,0,0,0), rgba(0,0,0,1));
 }
 
 .card--animated {
@@ -162,6 +156,10 @@ code {
 .artist-details--placeholder {
   background-color: #000;
 }
+.artist-image {
+  background-position: top left;
+  background-size: cover;
+}
 
 .avatar-wrapper {
   width: 50px;
@@ -171,7 +169,7 @@ code {
 }
 @media (min-width: 768px) {
   .avatar-wrapper {
-    width: 120px;
+    width: 100px;
   }
 }
 @media (min-width: 1024px) {
