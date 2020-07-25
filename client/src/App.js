@@ -73,9 +73,9 @@ function TopTracksList ({ tracks }) {
       <div className="artists-list-container">
         <h2 className="uppercase font-size--36 text--center">Your Favorite Tracks</h2>
         <RatherSee text="your favorite artists" link="/artists" />
-        <ul className="flex-list flex-list--full-screen">
-          { tracks.map((track) => (
-            <TrackCard track={track} key={track.id}/>
+        <ul className="">
+          { tracks.map((track, index) => (
+            <TrackCard track={track} key={track.id} index={index}/>
           ))}
         </ul>
       </div>
@@ -83,30 +83,127 @@ function TopTracksList ({ tracks }) {
   )
 }
 
-function TrackCard( { track }) {
+function TrackCard( { track, index }) {
   return (
-    <li className="card card--wide card--animated">
-      <div className="avatar-wrapper">
-        <img
-          className="avatar"
-          alt={`avatar for ${track.name}`}
-          src={track.album.images[0].url}
-        />
+    <li className="card--track"
+      style={{
+        'listStyleType': 'none',
+        'display': 'flex',
+        'marginBottom': '40px'
+    }}>
+      <div className="track-cover"
+        style={{
+          'borderRadius': '50%',
+          'flexBasis': '80px',
+          'maxWidth': '80px',
+          'minWidth': '80px',
+          'height': '80px',
+          'flex': '1 0 auto',
+          'backgroundImage': `url(${track.album.images[0].url})`,
+          'backgroundPosition': 'center',
+          'position': 'relative'
+        }}>
+        <div className="play"
+          style={{
+            'width': '0', 
+            'height': '0', 
+            'borderTop': '13px solid transparent',
+            'borderBottom': '13px solid transparent', 
+            'borderLeft': '22px solid #FFF', 
+            'position': 'absolute',
+            'zIndex': 3,
+            'top': '28px',
+            'left': '30px'
+          }}>
+        </div>
+        <div className="play"
+          style={{
+            'width': '0', 
+            'height': '0', 
+            'borderTop': '28px solid transparent',
+            'borderBottom': '28px solid transparent', 
+            'borderLeft': '46px solid #1DB954', 
+            'position': 'absolute',
+            'zIndex': 2,
+            'top': '13px',
+            'left': '21px'
+          }}>
+        </div>
+        <div className="play"
+          style={{
+            'width': '0', 
+            'height': '0', 
+            'borderTop': '31px solid transparent',
+            'borderBottom': '31px solid transparent', 
+            'borderLeft': '51px solid #FFF', 
+            'position': 'absolute',
+            'zIndex': 1,
+            'top': '10px',
+            'left': '20px'
+          }}>
+        </div>
       </div>
-      <div className="artist-details padding">
+      <div className="track-data"
+        style={{
+          'color': '#000',
+          'marginLeft': '20px',
+          'textAlign': 'left',
+          'display': 'flex',
+          'flexDirection': 'column',
+          'justifyContent': 'flex-start',
+          'alignItems': 'flex-start',
+          'position': 'relative',
+          'paddingTop': '0',
+          'paddingLeft': '110px',
+        }}>
+        <div style={{
+          'color': '#1DB954',
+          'fontSize': '108px',
+          'fontFamily': "'Anonymous Pro', monospace",
+          'letterSpacing': index < 9 || index > 18 ? '-5px' : '-15px',
+          'opacity': .1,
+          'position': 'absolute',
+          'top': '-14px',
+          'left': '16px',
+          'zIndex': -1,
+          'fontWeight': 'bold',
+          'textAlign': 'right'
+        }}>
+          {index < 9 ? `0${index + 1}` : index + 1}
+        </div>
         <a
-          className="link link--green-hover header header--artist-card"
+          className="link header"
+          style={{'paddingTop': '10px'}}
           href={`${BASE_WEB_PLAYER_URL}/track/${track.id}`}>
-          {track.name}
+          <span className="link--green-hover">{track.name}</span>
         </a>
-        {track.genres && track.genres.length > 0
-          ? (
-            <div className="genres">
-              {/* <span className="">Genres: {artist.genres.join(', ')}</span> */}
-            </div>
-          )
-          : null
-        }
+        <div
+          style={{
+            'display': 'block',
+            'fontWeight': 300
+          }}
+          className=""
+          href={`${BASE_WEB_PLAYER_URL}/track/${track.id}`}>
+          {track.artists.reduce((artistsArray, currentArtist) => {
+            artistsArray.push({
+              name: currentArtist.name ? currentArtist.name : '',
+              url: currentArtist.external_urls.length > 0 ? currentArtist.external_urls.spotify : '',
+              id: currentArtist.id ? currentArtist.id : ''
+            })
+            return artistsArray
+          }, []).map((artist) => (
+            <Link to={`/artists/${artist.id}`}
+              className="link--green-hover"
+              href={artist.url}
+              style={{
+                'margin-right': '10px',
+                'textDecoration': 'none',
+                'color': 'inherit'
+              }}>
+                {artist.name}
+            </Link>
+          ))}
+        </div>
       </div>
     </li>
   )
@@ -120,8 +217,8 @@ const Home = () => (
         <Link
           className="link route-link bold width--100 height--100"
           to="/artists">
-          <div className="center--both bold pos--abs link--green-hover">
-            My Top Artists
+          <div className="center--both bold pos--abs">
+            <span className="link--green-hover">My Top Artists</span>
           </div>
         </Link>
       </div>
@@ -129,8 +226,10 @@ const Home = () => (
         <Link
           className="link route-link bold width--100 height--100"
           to="/tracks">
-          <div className="center--both pos--abs link--black-hover">
-            My Top Tracks
+          <div className="center--both pos--abs">
+            <span className="link--black-hover">
+              My Top Tracks
+            </span>
           </div>
         </Link>
       </div>
@@ -340,7 +439,7 @@ class App extends React.Component {
       .then((response) => this.setState({ topArtists: response.items }))
   }
   getTopTracks() {
-    spotifyApi.getMyTopTracks({limit: 21})
+    spotifyApi.getMyTopTracks({limit: 20})
       .then((response) => this.setState({ topTracks: response.items }))
   }
   render() {
@@ -353,7 +452,7 @@ class App extends React.Component {
                 <Route exact path="/" component={Home} />
                 <Route exact path="/callback" render={() => (<Redirect to="/" />)} />
                 <Route exact path="/artists" render={() => (<TopArtists artists={this.state.topArtists}/>)} />
-                <Route path="/tracks" render={() => (<TopTracks tracks={this.state.topTracks}/>)} />
+                <Route exact path="/tracks" render={() => (<TopTracks tracks={this.state.topTracks}/>)} />
                 <Route path="/artists/:id" render={(props) => (<ArtistDetails key={props.location.pathname} {...props} />)} />
               </Router>
             : ( <a href={LOGIN_URI}>Login to Spotify</a>)

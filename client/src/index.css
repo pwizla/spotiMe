@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@1,700&display=swap');
 
 body {
   margin: 0;
@@ -95,6 +96,62 @@ code {
   height: 120px;
 }
 
+.card--track {
+  position: relative !important;
+  min-height:80px !important;
+  overflow: hidden !important;
+}
+.track-cover {
+  top: 0;
+  left: 0;
+  max-width: 80px;
+  flex-basis: 80px;
+  height: 80px;
+  background-repeat: repeat-x;
+  background-position-x: left !important;
+  /* background-size: cover; */
+}
+.track-data {
+  margin-left: 20px;
+  background-color: transparent;
+  transition: color 1s ease-in-out,
+    background-color .2s ease-in-out,
+    left .2s ease-in-out !important;
+}
+.card--track:hover > .track-cover {
+  transition: width .4s ease-in,
+    flex-basis .4s ease-in,
+    min-width .4s ease-in,
+    border-radius .82s .0s,
+    max-width .4s ease-in;
+  max-width: 100% !important;
+  min-width: 100% !important;
+  flex-basis: 100% !important;
+  top: 0;
+  left: 0;
+  border-radius: 0 !important;
+  z-index: -1 !important;
+  opacity: .7 !important;
+  position: absolute !important;
+  height: 100% !important;
+}
+.card--track:hover .track-data {
+  margin-left: 100px !important;
+}
+.card--track:hover .track-data a span,
+.card--track:hover .track-data > div,
+.card--track:hover .track-data a + div {
+  color: white !important;
+  background-color: #000;
+  opacity: 1 !important;
+}
+.card--track:hover .track-data a span,
+.card--track:hover .track-data a + div {
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-left: 10px;
+  font-weight: bold !important;
+}
 .card--animated {
   animation-name: fadein;
   opacity: 0;
