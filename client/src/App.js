@@ -32,33 +32,22 @@ function TopArtistsList ({ artists }) {
 
 function ArtistCard( { artist, expandable }) {
   return (
-    <li className={`card card--wide card--animated ${expandable ? 'card--expandable' : ''}`}>
-      {(artist.images && artist.images.length > 0) && (
-        <div className="avatar-wrapper">
-          <img
-            className="avatar"
-            alt={`avatar for ${artist.name}`}
-            src={artist.images[0].url}
-          />
+    <Link className="link link--card" to={`/artists/${artist.id}`}>
+      <li className={`card card--wide card--animated ${expandable ? 'card--expandable' : ''}`}>
+        {(artist.images && artist.images.length > 0) && (
+          <div className="avatar-wrapper">
+            <img
+              className="avatar"
+              alt={`avatar for ${artist.name}`}
+              src={artist.images[0].url}
+            />
+          </div>
+        )}
+        <div className={`artist-details padding ${!artist.images || artist.images.length === 0 ? 'artist-details--placeholder' : ''}`}>
+          <span><span className="header header--artist-card link--green-hover">{artist.name}</span></span>
         </div>
-      )}
-      <div className={`artist-details padding ${!artist.images || artist.images.length === 0 ? 'artist-details--placeholder' : ''}`}>
-        <Link
-          className="link header header--artist-card"
-          to={`/artists/${artist.id}`}
-        >
-          <span className="link--green-hover">{artist.name}</span>
-        </Link>
-        {artist.genres && artist.genres.length > 0
-          ? (
-            <div className="genres">
-              {/* <span className="">Genres: {artist.genres.join(', ')}</span> */}
-            </div>
-          )
-          : null
-        }
-      </div>
-    </li>
+      </li>
+    </Link>
   )
 }
 

@@ -151,6 +151,7 @@ code {
   width: 100%;
   padding-left: 30px;
   padding-right: 30px;
+  text-align: right;
 }
 @media (min-width: 1024px) {
   .artist-details {
@@ -212,10 +213,9 @@ code {
     background-position: 0 100%;
     background-repeat: repeat-x;
     background-size: 4px 0px;
-  /* color: #000; */
-  text-decoration: none;
   transition: background-size .2s;
 }
+.link--card:hover .link--green-hover,
 .link--green-hover:hover {
   background-size: 4px .4em;
 }
