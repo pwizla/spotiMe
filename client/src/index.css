@@ -554,12 +554,17 @@ code {
 
 .hover--bg-green {
   background-color: transparent;
-  transition-property: background-color;
+  border-radius: 50%;
+  transition-property: border-radius, background-size;
+  background-size: 0%;
+  transition-duration: .5s;
+  transition-timing-function: ease-out;
 }
 .hover--bg-black {
   /* background-color: transparent; */
   transition-property: all;
   color: #000;
+  background-image: linear-gradient(90deg, rgba(0,0,0,0), rgba(0,0,0,0) 60%);
 }
 .transition--fast {
   transition-duration: .3s;
@@ -579,11 +584,12 @@ code {
   transition-property: all;
 }
 .hover--bg-green:hover {
-  background-image: linear-gradient(90deg, rgba(29,185,84,1) 30%, rgba(29,185,84,.7))
+  background-color: rgba(29,185,84,1);
+  border-radius: 0;
+  background-size: 100%;
 }
 .hover--bg-black:hover {
-  background-image: linear-gradient(90deg, rgba(0,0,0,.6), rgba(0,0,0,1) 60%)
-  /* background-color: rgba(34,34,34, .8) */
+  background-image: linear-gradient(90deg, rgba(0,0,0,.6), rgba(0,0,0,1) 60%);
 }
 .hover--bg-black-gradient:hover {
   background-image: linear-gradient(90deg, rgba(0,0,0,0), rgba(0,0,0,1) 95%);
