@@ -246,11 +246,9 @@ class ArtistDetails extends React.Component {
     return (
       <div className="page page--two-columns">
         <section className="column column--full-height artist-summary">
-          {(images && images.length > 0) && (<img
-            className="artist-image square--320"
-            src={images[0].url}
-            alt={name}
-          />
+          {(images && images.length > 0) && (<div className="artist-image square--320"
+            style={{ 'background-image': `url(${images[0].url})`}}>
+          </div>
           )}
           <h1 className="header--artist-details flex-can-grow">
             <a
