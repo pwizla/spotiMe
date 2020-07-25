@@ -18,7 +18,7 @@ function TopArtistsList ({ artists }) {
   return (
     <>
       <div className="artists-list-container">
-        <h2 className="uppercase font-size--36">Your Favorite Artists</h2>
+        <h2 className="text--center uppercase font-size--36">Your Favorite Artists</h2>
         <p><RatherSee text="your favorite tracks" link="/tracks" /></p>
         <ul className="flex-list flex-list--full-screen">
           { artists.map((artist) => (
@@ -65,7 +65,7 @@ function ArtistCard( { artist, expandable }) {
 function RatherSee ({ text, link }) {
   return (
     <>
-      <p className="text--small margin--bottom-3">Rather see <Link to={link} className="link link--green-underline">{text}</Link>?</p>
+      <p className="text--small text--center margin--bottom-3">Rather see <Link to={link} className="link link--green-underline">{text}</Link>?</p>
     </>
   )
 }
@@ -82,7 +82,7 @@ function TopTracksList ({ tracks }) {
   return (
     <>
       <div className="artists-list-container">
-        <h2 className="uppercase font-size--36">Your Favorite Tracks</h2>
+        <h2 className="uppercase font-size--36 text--center">Your Favorite Tracks</h2>
         <RatherSee text="your favorite artists" link="/artists" />
         <ul className="flex-list flex-list--full-screen">
           { tracks.map((track) => (
@@ -125,7 +125,7 @@ function TrackCard( { track }) {
 
 const Home = () => (
   <div className="flex flex--column page--center-both">
-    <h2>What do you want to look at?</h2>
+    <h2 className="text--center">What do you want to look at?</h2>
     <div className="flex flex--center-both">
       <Link
         className="link route-link"

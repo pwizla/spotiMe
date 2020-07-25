@@ -50,7 +50,6 @@ code {
 }
 .card {
   display: flex;
-  text-align: left;
   margin-bottom: 20px;
   margin-right: 20px;
   position: relative;
@@ -262,6 +261,9 @@ code {
 
 .text--small {
   font-size: 14px;
+}
+.text--center {
+  text-align: center;
 }
 
 .uppercase {
